@@ -7,8 +7,6 @@ class hangman {
         stats st = new stats();
         String input;
         Character guess;
-        int wordsLeft;
-        boolean running = true;
         boolean playing = true;
         Scanner s = new Scanner(System.in);
         do {
@@ -29,11 +27,7 @@ class hangman {
                 st.p2guess(guess);
                 playing = st.gameOver();
             } while (playing);
-            System.out.println("Play Again?(y / n)");
-            do{
-            running = playAgain(s.next());
-            }while(running);
-        } while (running);
+        } while (playing);
         s.close();
     }
 
@@ -48,16 +42,5 @@ class hangman {
         System.out.println("Guessed Words: " + d);
         System.out.printf("limbs remaining: %d%n", a);
     }
-    private static boolean playAgain(String a){
-        if(a == "y" || a == "yes"){
-            return true;
-        }
-        else if(a == "n" || a == "no"){
-            return false;
-        }
-        else{
-            System.out.println("Invalid Input!");
-            return true;
-    }
 
-}}
+}
