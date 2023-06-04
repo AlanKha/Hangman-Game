@@ -1,30 +1,28 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 class hangman {
 
     public static void main(String[] args) {
         stats st = new stats();
-        String input;
-        Character guess;
+        String word;
         boolean playing = true;
         Scanner s = new Scanner(System.in);
         do {
+            st.reset();
 
-            System.out.println("Welcome to hangman!");
-            System.out.print("Player 1, enter a word: ");
+            System.out.print("Welcome to hangman!\nPlayer 1, enter a word: ");
 
-            input = s.next();
-            st.setWord(input);
+            word = s.next();
+            st.setWord(word);
 
             clearScreen();
 
             do {
-                showStats(st.limbs, st.hiddenword, st.guessedwords);
-                System.out.print("PLayer 2, guess a word: ");
-                guess = s.next().toLowerCase().charAt(0);
+
+                st.showStats();
+                System.out.print("PLayer 2, guess a letter: ");
+                st.p2guess(s.next().toLowerCase().charAt(0));
                 clearScreen();
-                st.p2guess(guess);
                 playing = st.gameOver();
             } while (playing);
         } while (playing);
@@ -35,12 +33,6 @@ class hangman {
         for (int i = 0; i < 25; i++) {
             System.out.println();
         }
-    }
-
-    public static void showStats(int a, ArrayList c, ArrayList d) {
-        System.out.println("Word: " + c);
-        System.out.println("Guessed Words: " + d);
-        System.out.printf("limbs remaining: %d%n", a);
     }
 
 }

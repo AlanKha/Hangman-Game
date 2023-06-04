@@ -2,25 +2,36 @@ import java.util.ArrayList;
 
 public class stats {
     public int limbs = 10;
-    public int wordsremaining = 0;
-    ArrayList<Character> word = new ArrayList<>();
-    ArrayList<Character> hiddenword = new ArrayList<>();
-    ArrayList<Character> guessedwords = new ArrayList<>();
+    public int lettersRemaining = 0;
+    ArrayList<Character> wordArray = new ArrayList<>();
+    ArrayList<Character> hiddenWordArray = new ArrayList<>();
+    ArrayList<Character> lettersGuessed = new ArrayList<>();
+
+    public void showStats(){
+        System.out.printf("Limbs remaining: %d%nLetters remaining: %d%nLetters guessed: ", limbs,
+        lettersRemaining);
+        for(int i = 0; i < wordArray.size(); i++){
+            System.out.print(hiddenWordArray.get(i) + " ");
+        }
+        System.out.println();
+    }
 
     public void p2guess(Character a) {
-        if (guessedwords.contains(a)) {
-            System.out.println("You already guessed that.");
-        } else if (word.contains(a)) {
-            System.out.println("Correct!");
-            guessedwords.add(a);
-            hiddenword.set(word.indexOf(a), a);
-            word.set(word.indexOf(a), '-');
-            --wordsremaining;
+        if(wordArray.contains(a)){
+            do{
+                --lettersRemaining;
+                hiddenWordArray.set(wordArray.indexOf(a), a);
+                wordArray.set(wordArray.indexOf(a), '-');
 
-        } else {
+            }while(wordArray.contains(a));
+            lettersGuessed.add(a);
+        }
+        else if(lettersGuessed.contains(a)){
+            System.out.println("You already guessed that letter.");
+        }
+        else{
             --limbs;
-            guessedwords.add(a);
-            System.out.println("Incorrect Guess");
+            lettersGuessed.add(a);
         }
     }
 
@@ -29,18 +40,18 @@ public class stats {
     }
 
     public void setWord(String a) {
-        wordsremaining = a.length();
+        lettersRemaining = a.length();
         for (int i = 0; i < a.length(); i++) {
-            word.add(a.toLowerCase().charAt(i));
-            hiddenword.add('-');
+            wordArray.add(a.toLowerCase().charAt(i));
+            hiddenWordArray.add('-');
         }
     }
 
     public void reset() {
         limbs = 10;
-        guessedwords.clear();
-        word.clear();
-        hiddenword.clear();
+        lettersGuessed.clear();
+        wordArray.clear();
+        hiddenWordArray.clear();
     }
 
     public boolean gameOver() {
@@ -48,7 +59,7 @@ public class stats {
             System.out.println("Player 1 Wins!");
             return false;
         }
-        if (wordsremaining == 0) {
+        if (lettersRemaining == 0) {
             System.out.println("Player 2 Wins!");
             return false;
         } else {
